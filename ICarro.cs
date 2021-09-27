@@ -2,7 +2,7 @@
 
 namespace Fabrica
 {
-    public interface ICarros
+    public interface ICarro
     {
         int Id { get; set; }
         string Nome { get; set; }

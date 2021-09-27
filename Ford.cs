@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Fabrica
 {
-    public class Ford : ICarros
+    public class Ford : ICarro
     {
         public int Id { get; set; }
         public string Nome { get; set; }
