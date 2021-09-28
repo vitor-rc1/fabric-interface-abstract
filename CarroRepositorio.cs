@@ -40,5 +40,39 @@ namespace Fabrica
                 connection.Close();
             }
         }
+
+        public List<ICarro> Todos()
+        {
+            var carros = new List<ICarro>();
+
+            using (MySqlConnection connection = new MySqlConnection(Program.SqlCNN))
+            {
+                connection.Open();
+
+                var sql = "SELECT * FROM carros WHERE marca = @marca;";
+
+                using (MySqlCommand command = new MySqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@marca", type.Name);
+                    var dr = command.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        var carro = (ICarro)Activator.CreateInstance(type);
+                        carro.Id = Convert.ToInt32(dr["id"]);
+                        carro.Ano = Convert.ToInt32(dr["ano"]);
+                        carro.Nome = dr["nome"].ToString();
+                        carro.Modelo = dr["modelo"].ToString();
+
+                        carros.Add(carro);
+                    }
+                }
+
+                connection.Close();
+
+            }
+
+            return carros;
+        }
     }
 }
